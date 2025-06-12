@@ -4,10 +4,11 @@
  */
 package View;
 
+import Controller.ServicoFilme;
 import View.Panels.FilmePanel;
 import View.Panels.ReservaPanel;
 import java.awt.BorderLayout;
-import javax.swing.JFrame;
+import java.awt.Component;
 
 /**
  *
@@ -15,14 +16,22 @@ import javax.swing.JFrame;
  */
 public class MainScreen extends javax.swing.JFrame {
 
+    private final FilmePanel filmePanel;
+    private final ServicoFilme servicoFilme;
+
     /**
      * Creates new form MainScreen
      */
     public MainScreen() {
         initComponents();
-        setResizable(false);
+
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        this.servicoFilme = new ServicoFilme();
+
+        this.filmePanel = new FilmePanel(servicoFilme);
+
+        this.onLoadContentPanel(this.filmePanel);
     }
 
     /**
@@ -33,7 +42,6 @@ public class MainScreen extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
@@ -43,6 +51,7 @@ public class MainScreen extends javax.swing.JFrame {
         panelContent = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(45, 45, 45));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -57,7 +66,7 @@ public class MainScreen extends javax.swing.JFrame {
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 14, -1, -1));
 
-        btnFilmes.setBackground(new java.awt.Color(42, 42, 42));
+        btnFilmes.setBackground(new java.awt.Color(60, 60, 60));
         btnFilmes.setFont(new java.awt.Font("Roboto", 0, 15)); // NOI18N
         btnFilmes.setForeground(new java.awt.Color(255, 255, 255));
         btnFilmes.setText("Filmes");
@@ -72,7 +81,7 @@ public class MainScreen extends javax.swing.JFrame {
         });
         jPanel2.add(btnFilmes, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 68, 228, 39));
 
-        btnReservas.setBackground(new java.awt.Color(42, 42, 42));
+        btnReservas.setBackground(new java.awt.Color(60, 60, 60));
         btnReservas.setFont(new java.awt.Font("Roboto", 0, 15)); // NOI18N
         btnReservas.setForeground(new java.awt.Color(255, 255, 255));
         btnReservas.setText("Reservas");
@@ -87,21 +96,21 @@ public class MainScreen extends javax.swing.JFrame {
         });
         jPanel2.add(btnReservas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 228, 37));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 458));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 480));
 
         panelContent.setBackground(new java.awt.Color(45, 45, 45));
         panelContent.setLayout(new java.awt.BorderLayout());
-        jPanel1.add(panelContent, new org.netbeans.lib.awtextra.AbsoluteConstraints(232, -2, 660, 470));
+        jPanel1.add(panelContent, new org.netbeans.lib.awtextra.AbsoluteConstraints(232, 8, 650, 460));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 891, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 472, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -109,21 +118,20 @@ public class MainScreen extends javax.swing.JFrame {
 
     private void btnReservasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReservasActionPerformed
         // TODO add your handling code here:
-        this.panelContent.removeAll();
-
-        this.panelContent.add(new ReservaPanel(), BorderLayout.CENTER);
-        this.panelContent.revalidate();
-        this.panelContent.repaint();
+        this.onLoadContentPanel(new ReservaPanel());
     }//GEN-LAST:event_btnReservasActionPerformed
 
     private void btnFilmesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFilmesActionPerformed
+        this.onLoadContentPanel(this.filmePanel);
+    }//GEN-LAST:event_btnFilmesActionPerformed
+
+    private void onLoadContentPanel(Component comp) {
         this.panelContent.removeAll();
 
-        this.panelContent.add(new FilmePanel(), BorderLayout.CENTER);
+        this.panelContent.add(comp, BorderLayout.CENTER);
         this.panelContent.revalidate();
         this.panelContent.repaint();
-
-    }//GEN-LAST:event_btnFilmesActionPerformed
+    }
 
     /**
      * @param args the command line arguments

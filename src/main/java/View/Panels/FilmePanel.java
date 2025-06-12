@@ -4,17 +4,32 @@
  */
 package View.Panels;
 
+import Controller.ServicoFilme;
+import Util.NotificacaoPopup;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author kashiki
  */
 public class FilmePanel extends javax.swing.JPanel {
 
+    private final NotificacaoPopup popup;
+    private final ServicoFilme servicoFilme;
+
     /**
      * Creates new form Filme
+     *
+     * @param servicoFilme
      */
-    public FilmePanel() {
+    public FilmePanel(ServicoFilme servicoFilme) {
         initComponents();
+
+        this.servicoFilme = servicoFilme;
+        this.popup = new NotificacaoPopup();
+
+        this.onLoadTable();
     }
 
     /**
@@ -27,59 +42,221 @@ public class FilmePanel extends javax.swing.JPanel {
     private void initComponents() {
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tableFilmes = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+        jTextField2 = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        txtNomeFilme = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txtDescricaoFilme = new javax.swing.JTextArea();
+        btnSalvarFilme = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(45, 45, 45));
 
         jTabbedPane1.setBackground(new java.awt.Color(45, 45, 45));
-
-        jPanel1.setBackground(new java.awt.Color(45, 45, 45));
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 525, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 313, Short.MAX_VALUE)
-        );
-
-        jTabbedPane1.addTab("Cadastrar filme", jPanel1);
+        jTabbedPane1.setForeground(new java.awt.Color(255, 255, 255));
 
         jPanel2.setBackground(new java.awt.Color(45, 45, 45));
+
+        tableFilmes.setBackground(new java.awt.Color(60, 60, 60));
+        tableFilmes.setForeground(new java.awt.Color(255, 255, 255));
+        tableFilmes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Id", "Nome", "Descricao"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tableFilmes);
+
+        jLabel2.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Nome do filme:");
+
+        jTextField2.setBackground(new java.awt.Color(60, 60, 60));
+        jTextField2.setForeground(new java.awt.Color(255, 255, 255));
+        jTextField2.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 10, 0, 10));
+
+        jButton2.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
+        jButton2.setText("Pesquisar");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 525, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jScrollPane1)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton2)))
+                .addGap(18, 18, 18))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 313, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(11, 11, 11)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Listar", jPanel2);
+        jTabbedPane1.addTab("Lista de Filmes", jPanel2);
+
+        jPanel1.setBackground(new java.awt.Color(45, 45, 45));
+
+        txtNomeFilme.setBackground(new java.awt.Color(60, 60, 60));
+        txtNomeFilme.setFont(new java.awt.Font("Roboto", 0, 15)); // NOI18N
+        txtNomeFilme.setForeground(new java.awt.Color(255, 255, 255));
+        txtNomeFilme.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 10, 0, 10));
+        txtNomeFilme.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarFilmeActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Nome do filme:");
+
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Descrição do filme:");
+
+        txtDescricaoFilme.setBackground(new java.awt.Color(60, 60, 60));
+        txtDescricaoFilme.setColumns(20);
+        txtDescricaoFilme.setFont(new java.awt.Font("Roboto", 0, 15)); // NOI18N
+        txtDescricaoFilme.setForeground(new java.awt.Color(255, 255, 255));
+        txtDescricaoFilme.setRows(5);
+        txtDescricaoFilme.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        jScrollPane2.setViewportView(txtDescricaoFilme);
+
+        btnSalvarFilme.setText("Salvar");
+        btnSalvarFilme.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnSalvarFilme.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarFilmeActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnSalvarFilme, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(txtNomeFilme, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 639, Short.MAX_VALUE)))
+                .addContainerGap(28, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(45, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtNomeFilme, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnSalvarFilme, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24))
+        );
+
+        jTabbedPane1.addTab("Cadastro de Filmes", jPanel1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 525, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnSalvarFilmeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarFilmeActionPerformed
+        String nomeFilme = this.txtNomeFilme.getText().trim();
+        String descricaoFilme = this.txtDescricaoFilme.getText().trim();
+
+        Boolean isSucces = this.servicoFilme.Cadastrar(nomeFilme, descricaoFilme);
+
+        if (isSucces) {
+            popup.showMessage("Sucesso", "Filme cadastrado com sucesso!", JOptionPane.INFORMATION_MESSAGE);
+
+            this.txtNomeFilme.setText("");
+            this.txtDescricaoFilme.setText("");
+
+            this.onLoadTable();
+        } else {
+            popup.showMessage("Erro", "Filme não cadastrado!", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnSalvarFilmeActionPerformed
+
+    private void onLoadTable() {
+        String[] colunas = {"Id", "Nome", "Descrição"};
+        DefaultTableModel modelo = new DefaultTableModel(colunas, 0);
+
+        this.tableFilmes.setModel(modelo);
+
+        this.servicoFilme.Listar().forEach(filme -> {
+            int Id = filme.getId();
+            String Nome = filme.getNome();
+            String Descricao = filme.getDescricao();
+
+            Object[] obj = {Id, Nome, Descricao};
+
+            modelo.addRow(obj);
+        });
+
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnSalvarFilme;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTable tableFilmes;
+    private javax.swing.JTextArea txtDescricaoFilme;
+    private javax.swing.JTextField txtNomeFilme;
     // End of variables declaration//GEN-END:variables
 }
