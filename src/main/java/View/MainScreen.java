@@ -79,7 +79,7 @@ public class MainScreen extends javax.swing.JFrame {
                 btnFilmesActionPerformed(evt);
             }
         });
-        jPanel2.add(btnFilmes, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 68, 228, 39));
+        jPanel2.add(btnFilmes, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 228, 39));
 
         btnReservas.setBackground(new java.awt.Color(60, 60, 60));
         btnReservas.setFont(new java.awt.Font("Roboto", 0, 15)); // NOI18N
@@ -94,19 +94,19 @@ public class MainScreen extends javax.swing.JFrame {
                 btnReservasActionPerformed(evt);
             }
         });
-        jPanel2.add(btnReservas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 228, 37));
+        jPanel2.add(btnReservas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 228, 37));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 480));
 
         panelContent.setBackground(new java.awt.Color(45, 45, 45));
         panelContent.setLayout(new java.awt.BorderLayout());
-        jPanel1.add(panelContent, new org.netbeans.lib.awtextra.AbsoluteConstraints(232, 8, 650, 460));
+        jPanel1.add(panelContent, new org.netbeans.lib.awtextra.AbsoluteConstraints(232, 8, 740, 470));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 891, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 980, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

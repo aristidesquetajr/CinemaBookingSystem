@@ -5,7 +5,9 @@
 package View.Panels;
 
 import Controller.ServicoFilme;
+import Model.Filme;
 import Util.NotificacaoPopup;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -14,9 +16,10 @@ import javax.swing.table.DefaultTableModel;
  * @author kashiki
  */
 public class FilmePanel extends javax.swing.JPanel {
-
+    
     private final NotificacaoPopup popup;
     private final ServicoFilme servicoFilme;
+    private final DefaultTableModel tableModel;
 
     /**
      * Creates new form Filme
@@ -25,10 +28,12 @@ public class FilmePanel extends javax.swing.JPanel {
      */
     public FilmePanel(ServicoFilme servicoFilme) {
         initComponents();
-
+        
+        tableModel = (DefaultTableModel) this.tableFilmes.getModel();
+        
         this.servicoFilme = servicoFilme;
         this.popup = new NotificacaoPopup();
-
+        
         this.onLoadTable();
     }
 
@@ -46,15 +51,21 @@ public class FilmePanel extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         tableFilmes = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
+        txtSearchBoxMovieName = new javax.swing.JTextField();
+        btnSearchMovie = new javax.swing.JButton();
+        btnUpdateMovie = new javax.swing.JButton();
+        btnDeleteMovie = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         txtNomeFilme = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        cmbPublicoAlvo = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtDescricaoFilme = new javax.swing.JTextArea();
         btnSalvarFilme = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        txtDataLancamento = new javax.swing.JFormattedTextField();
 
         setBackground(new java.awt.Color(45, 45, 45));
 
@@ -63,25 +74,28 @@ public class FilmePanel extends javax.swing.JPanel {
 
         jPanel2.setBackground(new java.awt.Color(45, 45, 45));
 
-        tableFilmes.setBackground(new java.awt.Color(60, 60, 60));
-        tableFilmes.setForeground(new java.awt.Color(255, 255, 255));
+        tableFilmes.setForeground(new java.awt.Color(0, 0, 0));
         tableFilmes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
-                "Id", "Nome", "Descricao"
+                "Id", "Nome", "Público Alvo", "Data de lançamento", "Descrição"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, true, false, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
         jScrollPane1.setViewportView(tableFilmes);
@@ -90,40 +104,72 @@ public class FilmePanel extends javax.swing.JPanel {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Nome do filme:");
 
-        jTextField2.setBackground(new java.awt.Color(60, 60, 60));
-        jTextField2.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField2.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 10, 0, 10));
+        txtSearchBoxMovieName.setBackground(new java.awt.Color(60, 60, 60));
+        txtSearchBoxMovieName.setForeground(new java.awt.Color(255, 255, 255));
+        txtSearchBoxMovieName.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 10, 0, 10));
+        txtSearchBoxMovieName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtSearchBoxMovieNameActionPerformed(evt);
+            }
+        });
 
-        jButton2.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
-        jButton2.setText("Pesquisar");
+        btnSearchMovie.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
+        btnSearchMovie.setText("Pesquisar");
+        btnSearchMovie.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtSearchBoxMovieNameActionPerformed(evt);
+            }
+        });
+
+        btnUpdateMovie.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
+        btnUpdateMovie.setText("Atualizar");
+        btnUpdateMovie.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateMovieActionPerformed(evt);
+            }
+        });
+
+        btnDeleteMovie.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
+        btnDeleteMovie.setText("Deletar");
+        btnDeleteMovie.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteMovieActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGap(20, 20, 20)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane1)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtSearchBoxMovieName, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2)))
-                .addGap(18, 18, 18))
+                        .addComponent(btnSearchMovie)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnUpdateMovie)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnDeleteMovie)))
+                .addGap(20, 20, 20))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(11, 11, 11)
+                .addGap(20, 20, 20)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(txtSearchBoxMovieName, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSearchMovie, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnUpdateMovie, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnDeleteMovie, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20))
         );
 
         jTabbedPane1.addTab("Lista de Filmes", jPanel2);
@@ -131,7 +177,7 @@ public class FilmePanel extends javax.swing.JPanel {
         jPanel1.setBackground(new java.awt.Color(45, 45, 45));
 
         txtNomeFilme.setBackground(new java.awt.Color(60, 60, 60));
-        txtNomeFilme.setFont(new java.awt.Font("Roboto", 0, 15)); // NOI18N
+        txtNomeFilme.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
         txtNomeFilme.setForeground(new java.awt.Color(255, 255, 255));
         txtNomeFilme.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 10, 0, 10));
         txtNomeFilme.addActionListener(new java.awt.event.ActionListener() {
@@ -140,15 +186,23 @@ public class FilmePanel extends javax.swing.JPanel {
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Nome do filme:");
 
+        jLabel4.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("Público alvo:");
+
+        cmbPublicoAlvo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Homens", "Mulheres" }));
+
+        jLabel3.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Descrição do filme:");
 
         txtDescricaoFilme.setBackground(new java.awt.Color(60, 60, 60));
         txtDescricaoFilme.setColumns(20);
-        txtDescricaoFilme.setFont(new java.awt.Font("Roboto", 0, 15)); // NOI18N
+        txtDescricaoFilme.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
         txtDescricaoFilme.setForeground(new java.awt.Color(255, 255, 255));
         txtDescricaoFilme.setRows(5);
         txtDescricaoFilme.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -162,35 +216,65 @@ public class FilmePanel extends javax.swing.JPanel {
             }
         });
 
+        jLabel5.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("Data de lançamento:");
+
+        txtDataLancamento.setBackground(new java.awt.Color(60, 60, 60));
+        txtDataLancamento.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 10, 0, 10));
+        txtDataLancamento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
+        txtDataLancamento.setText("15/06/2025");
+        txtDataLancamento.setToolTipText("");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnSalvarFilme, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(txtNomeFilme, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 639, Short.MAX_VALUE)))
-                .addContainerGap(28, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel3)
+                                .addComponent(jLabel5)
+                                .addComponent(txtDataLancamento, javax.swing.GroupLayout.PREFERRED_SIZE, 705, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(2, 2, 2)
+                                        .addComponent(jLabel1))
+                                    .addComponent(txtNomeFilme, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(45, 45, 45)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cmbPublicoAlvo, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 703, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(45, Short.MAX_VALUE)
-                .addComponent(jLabel1)
+                .addContainerGap(20, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtNomeFilme, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtNomeFilme, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbPublicoAlvo, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtDataLancamento, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnSalvarFilme, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24))
+                .addGap(18, 18, 18))
         );
 
         jTabbedPane1.addTab("Cadastro de Filmes", jPanel1);
@@ -207,56 +291,109 @@ public class FilmePanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void txtSearchBoxMovieNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchBoxMovieNameActionPerformed
+        String name = this.txtSearchBoxMovieName.getText();
+        
+        if (name.isEmpty()) {
+            this.onLoadTable();
+            return;
+        }
+        
+        List<Filme> filmes = this.servicoFilme.Consultar(name);
+        
+        if (filmes.isEmpty()) {
+            popup.showMessage("Erro", "Filme não encontrado!", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        tableModel.setRowCount(0);
+        
+        filmes.forEach(filme -> tableModel.addRow(filme.toObject()));
+    }//GEN-LAST:event_txtSearchBoxMovieNameActionPerformed
+
+    private void btnUpdateMovieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateMovieActionPerformed
+        int indexSelected = this.tableFilmes.getSelectedRow();
+        
+        int id = (int) tableModel.getValueAt(indexSelected, 0);
+        String nome = (String) tableModel.getValueAt(indexSelected, 1);
+        String descricao = (String) tableModel.getValueAt(indexSelected, 4);
+        String publicoAlvoFIlme = (String) tableModel.getValueAt(indexSelected, 2);
+        String datalancamentoFilme = (String) tableModel.getValueAt(indexSelected, 3);
+        
+        Boolean isSuccess = this.servicoFilme.Atualizar(id, nome, descricao, publicoAlvoFIlme, datalancamentoFilme);
+        
+        if (isSuccess) {
+            popup.showMessage("Sucesso", "Filme atualizado com sucesso!", JOptionPane.INFORMATION_MESSAGE);
+            
+            this.onLoadTable();
+        } else {
+            popup.showMessage("Erro", "Filme não atualizado!", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnUpdateMovieActionPerformed
+
+    private void btnDeleteMovieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteMovieActionPerformed
+        int indexSelected = this.tableFilmes.getSelectedRow();
+        
+        int id = (int) tableModel.getValueAt(indexSelected, 0);
+        
+        Boolean isSuccess = this.servicoFilme.Remover(id);
+        
+        if (isSuccess) {
+            popup.showMessage("Sucesso", "Filme removido com sucesso!", JOptionPane.INFORMATION_MESSAGE);
+            
+            this.onLoadTable();
+        } else {
+            popup.showMessage("Erro", "Filme não removido!", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnDeleteMovieActionPerformed
+
     private void btnSalvarFilmeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarFilmeActionPerformed
         String nomeFilme = this.txtNomeFilme.getText().trim();
-        String descricaoFilme = this.txtDescricaoFilme.getText().trim();
-
-        Boolean isSucces = this.servicoFilme.Cadastrar(nomeFilme, descricaoFilme);
-
-        if (isSucces) {
+        String descricaoFilme = this.txtDescricaoFilme.getText();
+        String publicoAlvoFIlme = this.cmbPublicoAlvo.getSelectedItem().toString();
+        String datalancamentoFilme = this.txtDataLancamento.getText();
+        
+        Boolean isSuccess = this.servicoFilme.Cadastrar(nomeFilme, descricaoFilme, publicoAlvoFIlme, datalancamentoFilme);
+        
+        if (isSuccess) {
             popup.showMessage("Sucesso", "Filme cadastrado com sucesso!", JOptionPane.INFORMATION_MESSAGE);
-
+            
             this.txtNomeFilme.setText("");
             this.txtDescricaoFilme.setText("");
-
+            
             this.onLoadTable();
         } else {
             popup.showMessage("Erro", "Filme não cadastrado!", JOptionPane.ERROR_MESSAGE);
         }
+
     }//GEN-LAST:event_btnSalvarFilmeActionPerformed
-
+    
     private void onLoadTable() {
-        String[] colunas = {"Id", "Nome", "Descrição"};
-        DefaultTableModel modelo = new DefaultTableModel(colunas, 0);
-
-        this.tableFilmes.setModel(modelo);
-
-        this.servicoFilme.Listar().forEach(filme -> {
-            int Id = filme.getId();
-            String Nome = filme.getNome();
-            String Descricao = filme.getDescricao();
-
-            Object[] obj = {Id, Nome, Descricao};
-
-            modelo.addRow(obj);
-        });
-
+        tableModel.setRowCount(0);
+        
+        this.servicoFilme.Listar().forEach(filme -> tableModel.addRow(filme.toObject()));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnDeleteMovie;
     private javax.swing.JButton btnSalvarFilme;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnSearchMovie;
+    private javax.swing.JButton btnUpdateMovie;
+    private javax.swing.JComboBox<String> cmbPublicoAlvo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTable tableFilmes;
+    private javax.swing.JFormattedTextField txtDataLancamento;
     private javax.swing.JTextArea txtDescricaoFilme;
     private javax.swing.JTextField txtNomeFilme;
+    private javax.swing.JTextField txtSearchBoxMovieName;
     // End of variables declaration//GEN-END:variables
 }

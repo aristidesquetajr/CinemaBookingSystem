@@ -51,13 +51,9 @@ public class RepositorioFilme {
         return false;
     }
 
-    public Filme Consultar(String nome) {
+    public List<Filme> Consultar(String nome) {
         if (nome != null) {
-            for (Filme filme : this.filmes) {
-                if (filme.getNome().equalsIgnoreCase(nome)) {
-                    return filme;
-                }
-            }
+            return this.filmes.stream().filter(prdct -> prdct.getNome().toLowerCase().contains(nome.toLowerCase())).toList();
         }
         return null;
     }
@@ -69,6 +65,14 @@ public class RepositorioFilme {
             this.filmes.remove(filme);
             return true;
         }
+        return false;
+    }
+
+    public boolean AlreadyExists(String name) {
+        if (name != null) {
+            return this.filmes.stream().anyMatch(f -> f.getNome().trim().equalsIgnoreCase(name.trim()));
+        }
+
         return false;
     }
 }

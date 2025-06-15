@@ -16,32 +16,35 @@ import java.util.List;
 public class ServicoFilme implements IFilme {
 
     private Filme filme;
-    private RepositorioFilme repositorio;
+    private final RepositorioFilme repositorio;
 
     public ServicoFilme() {
         this.repositorio = new RepositorioFilme();
     }
 
     @Override
-    public boolean Cadastrar(String nome, String descricao) {
-        if ((!nome.isEmpty()) && (!descricao.isEmpty())) {
-            filme = new Filme(nome, descricao);
-            return repositorio.Cadastrar(filme);
+    public boolean Cadastrar(String nome, String descricao, String publicoAlvo, String dataLancamento) {
+        if ((!nome.isEmpty()) && (!descricao.isEmpty()) && (!publicoAlvo.isEmpty()) && (!dataLancamento.isEmpty())) {
+            if (repositorio.AlreadyExists(nome) != true) {
+                filme = new Filme(nome, descricao, publicoAlvo, dataLancamento);
+                return repositorio.Cadastrar(filme);
+            }
         }
         return false;
     }
 
     @Override
-    public boolean Atualizar(int id, String nome, String descricao) {
-        if ((id > 0) && (!nome.isEmpty()) && (!descricao.isEmpty())) {
-            filme = new Filme(id, nome, descricao);
+    public boolean Atualizar(int id, String nome, String descricao, String publicoAlvo, String dataLancamento) {
+        if ((id > 0) && (!nome.isEmpty()) && (!descricao.isEmpty()) && (!publicoAlvo.isEmpty()) && (!dataLancamento.isEmpty())) {
+            filme = new Filme(id, nome, descricao, publicoAlvo, dataLancamento);
             return repositorio.Atualizar(filme);
+
         }
         return false;
     }
 
     @Override
-    public Filme Consultar(String nome) {
+    public List<Filme> Consultar(String nome) {
         return repositorio.Consultar(nome);
     }
 

@@ -17,8 +17,8 @@ import Util.ViewBase;
  */
 public class ViewReserva extends ViewBase {
 
-    private ServicoReserva servico;
-    private ServicoFilme servicoFilme;
+    private final ServicoReserva servico;
+    private final ServicoFilme servicoFilme;
 
     public ViewReserva(ServicoFilme servicoFilme) {
         super();

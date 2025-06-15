@@ -12,11 +12,11 @@ import java.util.List;
  */
 public interface IFilme {
 
-    boolean Cadastrar(String nome, String descricao);
+    boolean Cadastrar(String nome, String descricao, String publicoAlvo, String dataLancamento);
 
-    boolean Atualizar(int id, String nome, String descricao);
+    boolean Atualizar(int id, String nome, String descricao, String publicoAlvo, String dataLancamento);
 
-    Filme Consultar(String nome);
+    List<Filme> Consultar(String nome);
 
     Filme ConsultarPorId(int id);
 
