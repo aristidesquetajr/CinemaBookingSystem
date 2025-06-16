@@ -4,17 +4,48 @@
  */
 package View.Panels;
 
+import Controller.ServicoFilme;
+import Controller.ServicoReserva;
+import Model.Filme;
+import Model.Reserva;
+import Util.NotificacaoPopup;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author kashiki
  */
-public class ReservaPanel extends javax.swing.JPanel {
+public class ReservaPanel extends javax.swing.JPanel implements PropertyChangeListener {
+
+    private final NotificacaoPopup popup;
+    private final ServicoFilme servicoFilme;
+    private final ServicoReserva servicoReserva;
+    private final DefaultTableModel tableModel;
 
     /**
      * Creates new form Filme
+     *
+     * @param servicoFilme
      */
-    public ReservaPanel() {
+    public ReservaPanel(ServicoFilme servicoFilme) {
         initComponents();
+
+        tableModel = (DefaultTableModel) this.tableReservas.getModel();
+
+        this.servicoReserva = new ServicoReserva(servicoFilme);
+
+        this.servicoFilme = servicoFilme;
+        this.popup = new NotificacaoPopup();
+
+        this.onLoadFilmes();
+
+        this.servicoFilme.addPropertyChangeListener(this);
+
     }
 
     /**
@@ -29,39 +60,38 @@ public class ReservaPanel extends javax.swing.JPanel {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tableReservas = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        txtSearchBoxClientName = new javax.swing.JTextField();
+        btnSearchReserva = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        txtNomeFilme = new javax.swing.JTextField();
+        txtNomeCliente = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cmbFilmes = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
-        jSpinner1 = new javax.swing.JSpinner();
-        jButton2 = new javax.swing.JButton();
+        txtQtdBilhetes = new javax.swing.JSpinner();
+        btnCriarReserva = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(45, 45, 45));
+        setPreferredSize(new java.awt.Dimension(745, 468));
 
         jTabbedPane1.setBackground(new java.awt.Color(45, 45, 45));
         jTabbedPane1.setForeground(new java.awt.Color(255, 255, 255));
 
         jPanel2.setBackground(new java.awt.Color(45, 45, 45));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tableReservas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Id", "Title 2", "Title 3", "Title 4"
+                "Id", "Cliente", "Filme", "Bilhetes"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
                 false, true, true, true
@@ -75,45 +105,66 @@ public class ReservaPanel extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tableReservas);
 
         jLabel1.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Nome do cliente:");
 
-        jTextField1.setBackground(new java.awt.Color(60, 60, 60));
-        jTextField1.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 10, 0, 10));
+        txtSearchBoxClientName.setBackground(new java.awt.Color(60, 60, 60));
+        txtSearchBoxClientName.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 10, 0, 10));
+        txtSearchBoxClientName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchReservaActionPerformed(evt);
+            }
+        });
 
-        jButton1.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
-        jButton1.setText("Pesquisar");
+        btnSearchReserva.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
+        btnSearchReserva.setText("Pesquisar");
+        btnSearchReserva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchReservaActionPerformed(evt);
+            }
+        });
+
+        jButton4.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
+        jButton4.setText("Remover");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(20, 20, 20)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 636, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 705, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 404, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(txtSearchBoxClientName)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnSearchReserva)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton4)))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(txtSearchBoxClientName, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnSearchReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Lista de reservas", jPanel2);
@@ -124,63 +175,66 @@ public class ReservaPanel extends javax.swing.JPanel {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Nome do cliente:");
 
-        txtNomeFilme.setBackground(new java.awt.Color(60, 60, 60));
-        txtNomeFilme.setFont(new java.awt.Font("Roboto", 0, 15)); // NOI18N
-        txtNomeFilme.setForeground(new java.awt.Color(255, 255, 255));
-        txtNomeFilme.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 10, 0, 10));
+        txtNomeCliente.setBackground(new java.awt.Color(60, 60, 60));
+        txtNomeCliente.setFont(new java.awt.Font("Roboto", 0, 15)); // NOI18N
+        txtNomeCliente.setForeground(new java.awt.Color(255, 255, 255));
+        txtNomeCliente.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 10, 0, 10));
 
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Selecionar filme:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbFilmes.setBackground(new java.awt.Color(60, 60, 60));
+        cmbFilmes.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
 
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Quantidade de bolhetes");
+        jLabel4.setText("Quantidade de bilhetes");
 
-        jButton2.setText("Salvar");
+        txtQtdBilhetes.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
+        txtQtdBilhetes.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+
+        btnCriarReserva.setText("Criar reserva");
+        btnCriarReserva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCriarReservaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(20, 20, 20)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jSpinner1, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.LEADING, 0, 625, Short.MAX_VALUE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtNomeFilme, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addContainerGap(19, Short.MAX_VALUE))))
+                    .addComponent(jLabel2)
+                    .addComponent(txtNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 704, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(btnCriarReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4)
+                            .addComponent(cmbFilmes, 0, 704, Short.MAX_VALUE)
+                            .addComponent(txtQtdBilhetes))))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(45, 45, 45)
+                .addGap(20, 20, 20)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtNomeFilme, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addComponent(txtNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
+                .addComponent(cmbFilmes, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(57, Short.MAX_VALUE))
+                .addComponent(txtQtdBilhetes, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnCriarReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(103, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Criar reserva", jPanel1);
@@ -197,11 +251,76 @@ public class ReservaPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnCriarReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCriarReservaActionPerformed
+        String nomeCliente = this.txtNomeCliente.getText().trim();
+        Filme filme = (Filme) this.cmbFilmes.getSelectedItem();
+
+        if (filme == null) {
+            popup.showMessage("Erro", "Filme inválido!", JOptionPane.ERROR_MESSAGE);
+        }
+
+        int filmeId = filme.getId();
+        int qtdBilhetes = (int) this.txtQtdBilhetes.getValue();
+
+        Boolean isSuccess = this.servicoReserva.Cadastrar(nomeCliente, filmeId, qtdBilhetes);
+
+        if (isSuccess) {
+            popup.showMessage("Sucesso", "Reserva criada com sucesso!", JOptionPane.INFORMATION_MESSAGE);
+
+            this.txtNomeCliente.setText("");
+            this.cmbFilmes.setSelectedIndex(0);
+            this.txtQtdBilhetes.setValue(0);
+
+            this.onLoadTable();
+        } else {
+            popup.showMessage("Erro", "Reserva não criada!", JOptionPane.ERROR_MESSAGE);
+        }
+
+    }//GEN-LAST:event_btnCriarReservaActionPerformed
+
+    private void btnSearchReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchReservaActionPerformed
+        String clientName = txtSearchBoxClientName.getText().trim();
+
+        if (clientName.isEmpty()) {
+            this.onLoadTable();
+            return;
+        }
+
+        List<Reserva> reservas = this.servicoReserva.Consultar(clientName);
+
+        if (reservas.isEmpty()) {
+            popup.showMessage("Erro", "Reserva não encontrada!", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        tableModel.setRowCount(0);
+
+        reservas.forEach(reserva -> tableModel.addRow(reserva.toObject()));
+    }//GEN-LAST:event_btnSearchReservaActionPerformed
+
+    private void onLoadFilmes() {
+        this.cmbFilmes.removeAllItems();
+        this.servicoFilme.Listar().forEach(f -> this.cmbFilmes.addItem(f));
+    }
+
+    private void onLoadTable() {
+        tableModel.setRowCount(0);
+
+        this.servicoReserva.Listar().forEach(r -> tableModel.addRow(r.toObject()));
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent pce) {
+        if ("filmes".equals(pce.getPropertyName())) {
+            SwingUtilities.invokeLater(this::onLoadFilmes);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JButton btnCriarReserva;
+    private javax.swing.JButton btnSearchReserva;
+    private javax.swing.JComboBox<Filme> cmbFilmes;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -209,10 +328,10 @@ public class ReservaPanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSpinner jSpinner1;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField txtNomeFilme;
+    private javax.swing.JTable tableReservas;
+    private javax.swing.JTextField txtNomeCliente;
+    private javax.swing.JSpinner txtQtdBilhetes;
+    private javax.swing.JTextField txtSearchBoxClientName;
     // End of variables declaration//GEN-END:variables
 }

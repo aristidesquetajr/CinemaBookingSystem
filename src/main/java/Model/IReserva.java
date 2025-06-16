@@ -16,7 +16,7 @@ public interface IReserva {
 
     boolean Atualizar(int id, String nomeCliente, int filmeId, int quantidade);
 
-    Reserva Consultar(String nomeCliente);
+    List<Reserva> Consultar(String nomeCliente);
 
     List<Reserva> Listar();
 

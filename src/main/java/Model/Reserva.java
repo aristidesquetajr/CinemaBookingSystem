@@ -55,9 +55,7 @@ public class Reserva {
         this.Quantidade = quantidade;
     }
 
-    @Override
-    public String toString() {
-        return "Reserva: {Id: " + this.Id + ", NomeCliente: " + this.getNomeCliente() + ", " + this.Filme + ", Quantidade: " + this.Quantidade + "}";
+    public Object[] toObject() {
+        return new Object[]{this.Id, this.NomeCliente, this.Filme.getNome(), this.Quantidade};
     }
-
 }

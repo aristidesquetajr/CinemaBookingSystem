@@ -17,6 +17,7 @@ import java.awt.Component;
 public class MainScreen extends javax.swing.JFrame {
 
     private final FilmePanel filmePanel;
+    private final ReservaPanel reservaPanel;
     private final ServicoFilme servicoFilme;
 
     /**
@@ -30,6 +31,7 @@ public class MainScreen extends javax.swing.JFrame {
         this.servicoFilme = new ServicoFilme();
 
         this.filmePanel = new FilmePanel(servicoFilme);
+        this.reservaPanel = new ReservaPanel(servicoFilme);
 
         this.onLoadContentPanel(this.filmePanel);
     }
@@ -117,8 +119,7 @@ public class MainScreen extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnReservasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReservasActionPerformed
-        // TODO add your handling code here:
-        this.onLoadContentPanel(new ReservaPanel());
+        this.onLoadContentPanel(this.reservaPanel);
     }//GEN-LAST:event_btnReservasActionPerformed
 
     private void btnFilmesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFilmesActionPerformed

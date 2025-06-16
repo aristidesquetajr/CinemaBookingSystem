@@ -51,7 +51,7 @@ public class ServicoReserva implements IReserva {
     }
 
     @Override
-    public Reserva Consultar(String nomeCliente) {
+    public List<Reserva> Consultar(String nomeCliente) {
         return repositorio.Consultar(nomeCliente);
     }
 

@@ -51,13 +51,9 @@ public class RepositorioReserva {
         return false;
     }
 
-    public Reserva Consultar(String nomeCliente) {
+    public List<Reserva> Consultar(String nomeCliente) {
         if (nomeCliente != null) {
-            for (Reserva reserva : this.reservas) {
-                if (reserva.getNomeCliente().equalsIgnoreCase(nomeCliente)) {
-                    return reserva;
-                }
-            }
+            return this.reservas.stream().filter(prdct -> prdct.getNomeCliente().toLowerCase().contains(nomeCliente.toLowerCase())).toList();
         }
         return null;
     }

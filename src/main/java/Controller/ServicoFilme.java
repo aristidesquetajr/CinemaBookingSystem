@@ -6,6 +6,8 @@ package Controller;
 
 import Model.Filme;
 import Model.IFilme;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.Comparator;
 import java.util.List;
 
@@ -17,9 +19,11 @@ public class ServicoFilme implements IFilme {
 
     private Filme filme;
     private final RepositorioFilme repositorio;
+    private final PropertyChangeSupport support;
 
     public ServicoFilme() {
         this.repositorio = new RepositorioFilme();
+        support = new PropertyChangeSupport(this);
     }
 
     @Override
@@ -27,7 +31,14 @@ public class ServicoFilme implements IFilme {
         if ((!nome.isEmpty()) && (!descricao.isEmpty()) && (!publicoAlvo.isEmpty()) && (!dataLancamento.isEmpty())) {
             if (repositorio.AlreadyExists(nome) != true) {
                 filme = new Filme(nome, descricao, publicoAlvo, dataLancamento);
-                return repositorio.Cadastrar(filme);
+
+                Boolean isSuccess = repositorio.Cadastrar(filme);
+
+                if (isSuccess) {
+                    support.firePropertyChange("filmes", null, filme);
+
+                }
+                return isSuccess;
             }
         }
         return false;
@@ -37,8 +48,13 @@ public class ServicoFilme implements IFilme {
     public boolean Atualizar(int id, String nome, String descricao, String publicoAlvo, String dataLancamento) {
         if ((id > 0) && (!nome.isEmpty()) && (!descricao.isEmpty()) && (!publicoAlvo.isEmpty()) && (!dataLancamento.isEmpty())) {
             filme = new Filme(id, nome, descricao, publicoAlvo, dataLancamento);
-            return repositorio.Atualizar(filme);
 
+            Boolean isSuccess = repositorio.Atualizar(filme);
+
+            if (isSuccess) {
+                support.firePropertyChange("filmes", null, filme);
+            }
+            return isSuccess;
         }
         return false;
     }
@@ -66,7 +82,21 @@ public class ServicoFilme implements IFilme {
 
     @Override
     public boolean Remover(int id) {
-        return repositorio.Remover(id);
+        Boolean isSuccess = repositorio.Remover(id);
+
+        if (isSuccess) {
+            support.firePropertyChange("filmes", null, filme);
+        }
+
+        return isSuccess;
+    }
+
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        support.addPropertyChangeListener(listener);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        support.removePropertyChangeListener(listener);
     }
 
 }

@@ -75,7 +75,7 @@ public class Filme {
 
     @Override
     public String toString() {
-        return "Filme: {Id: " + this.Id + ", Nome: " + this.Nome + ", Descricao: " + this.Descricao + "}";
+        return this.Nome;
     }
 
     public Object[] toObject() {

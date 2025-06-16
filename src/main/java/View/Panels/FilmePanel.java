@@ -194,6 +194,8 @@ public class FilmePanel extends javax.swing.JPanel {
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Público alvo:");
 
+        cmbPublicoAlvo.setBackground(new java.awt.Color(60, 60, 60));
+        cmbPublicoAlvo.setForeground(new java.awt.Color(255, 255, 255));
         cmbPublicoAlvo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Homens", "Mulheres" }));
 
         jLabel3.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
@@ -222,6 +224,7 @@ public class FilmePanel extends javax.swing.JPanel {
 
         txtDataLancamento.setBackground(new java.awt.Color(60, 60, 60));
         txtDataLancamento.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 10, 0, 10));
+        txtDataLancamento.setForeground(new java.awt.Color(255, 255, 255));
         txtDataLancamento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
         txtDataLancamento.setText("15/06/2025");
         txtDataLancamento.setToolTipText("");
