@@ -29,7 +29,7 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="tabPanel" alignment="1" max="32767" attributes="0"/>
+          <Component id="tabPanel" alignment="1" pref="490" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -54,8 +54,8 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Lista de Filmes">
-                <Property name="tabTitle" type="java.lang.String" value="Lista de Filmes"/>
+              <JTabbedPaneConstraints tabName="Lista de filmes">
+                <Property name="tabTitle" type="java.lang.String" value="Lista de filmes"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -92,7 +92,7 @@
                           <Component id="btnSearchMovie" alignment="3" min="-2" pref="38" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" pref="351" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" pref="342" max="32767" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="txtIdadeLancamento" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
@@ -198,8 +198,8 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Cadastro / Edi&#xe7;&#xe3;o de Filmes">
-                <Property name="tabTitle" type="java.lang.String" value="Cadastro / Edi&#xe7;&#xe3;o de Filmes"/>
+              <JTabbedPaneConstraints tabName="Cadastro / Edi&#xe7;&#xe3;o de filmes">
+                <Property name="tabTitle" type="java.lang.String" value="Cadastro / Edi&#xe7;&#xe3;o de filmes"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -251,7 +251,7 @@
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="txtIdFilme" alignment="3" pref="33" max="32767" attributes="0"/>
+                          <Component id="txtIdFilme" alignment="3" pref="30" max="32767" attributes="0"/>
                           <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -261,20 +261,20 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="txtNomeFilme" alignment="3" min="-2" pref="41" max="-2" attributes="0"/>
-                          <Component id="cmbPublicoAlvo" alignment="3" min="-2" pref="41" max="-2" attributes="0"/>
+                          <Component id="txtNomeFilme" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                          <Component id="cmbPublicoAlvo" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
                       <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="txtDataLancamento" min="-2" pref="47" max="-2" attributes="0"/>
+                      <Component id="txtDataLancamento" min="-2" pref="40" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jScrollPane2" min="-2" pref="135" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="btnReset" alignment="0" min="-2" pref="39" max="-2" attributes="0"/>
+                          <Component id="btnReset" alignment="0" min="-2" pref="40" max="-2" attributes="0"/>
                           <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                               <Component id="btnSalvarFilme" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                               <Component id="btnUpdateMovie" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
@@ -521,7 +521,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                       <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="24" max="32767" attributes="0"/>
+                      <EmptySpace pref="15" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>

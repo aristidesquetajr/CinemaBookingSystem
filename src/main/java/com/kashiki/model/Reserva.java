@@ -56,6 +56,6 @@ public class Reserva {
     }
 
     public Object[] toRowTable() {
-        return new Object[]{Id, NomeCliente, Filme.getNome(), Quantidade};
+        return new Object[]{Id, NomeCliente, Filme.getNome(), Quantidade, ""};
     }
 }
