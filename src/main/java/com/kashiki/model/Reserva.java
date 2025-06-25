@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Model;
+package com.kashiki.model;
 
 /**
  *
@@ -55,7 +55,7 @@ public class Reserva {
         this.Quantidade = quantidade;
     }
 
-    public Object[] toObject() {
-        return new Object[]{this.Id, this.NomeCliente, this.Filme.getNome(), this.Quantidade};
+    public Object[] toRowTable() {
+        return new Object[]{Id, NomeCliente, Filme.getNome(), Quantidade};
     }
 }

@@ -2,13 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package View.Panels;
+package com.kashiki.view.panels;
 
-import Controller.ServicoFilme;
-import Controller.ServicoReserva;
-import Model.Filme;
-import Model.Reserva;
-import Util.NotificacaoPopup;
+import com.kashiki.controller.ServicoFilme;
+import com.kashiki.controller.ServicoReserva;
+import com.kashiki.model.Filme;
+import com.kashiki.model.Reserva;
+import com.kashiki.util.NotificacaoPopup;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
@@ -295,7 +295,7 @@ public class ReservaPanel extends javax.swing.JPanel implements PropertyChangeLi
 
         tableModel.setRowCount(0);
 
-        reservas.forEach(reserva -> tableModel.addRow(reserva.toObject()));
+        reservas.forEach(reserva -> tableModel.addRow(reserva.toRowTable()));
     }//GEN-LAST:event_btnSearchReservaActionPerformed
 
     private void onLoadFilmes() {
@@ -306,7 +306,7 @@ public class ReservaPanel extends javax.swing.JPanel implements PropertyChangeLi
     private void onLoadTable() {
         tableModel.setRowCount(0);
 
-        this.servicoReserva.Listar().forEach(r -> tableModel.addRow(r.toObject()));
+        this.servicoReserva.Listar().forEach(r -> tableModel.addRow(r.toRowTable()));
     }
 
     @Override

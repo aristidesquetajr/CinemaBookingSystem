@@ -2,11 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package View;
+package com.kashiki.view;
 
-import Controller.ServicoFilme;
-import View.Panels.FilmePanel;
-import View.Panels.ReservaPanel;
+import com.kashiki.controller.ServicoFilme;
+import com.kashiki.view.panels.FilmePanel;
+import com.kashiki.view.panels.ReservaPanel;
 import java.awt.BorderLayout;
 import java.awt.Component;
 
@@ -98,21 +98,21 @@ public class MainScreen extends javax.swing.JFrame {
         });
         jPanel2.add(btnReservas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 228, 37));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 480));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 510));
 
         panelContent.setBackground(new java.awt.Color(45, 45, 45));
         panelContent.setLayout(new java.awt.BorderLayout());
-        jPanel1.add(panelContent, new org.netbeans.lib.awtextra.AbsoluteConstraints(232, 8, 740, 470));
+        jPanel1.add(panelContent, new org.netbeans.lib.awtextra.AbsoluteConstraints(232, 8, 1010, 490));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 980, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1246, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 505, Short.MAX_VALUE)
         );
 
         pack();

@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Model;
+package com.kashiki.model;
 
 /**
  *
@@ -78,7 +78,7 @@ public class Filme {
         return this.Nome;
     }
 
-    public Object[] toObject() {
-        return new Object[]{this.getId(), this.getNome(), this.PublicoAlvo, this.DataLancamento, this.getDescricao()};
+    public Object[] toRowTable() {
+        return new Object[]{Id, Nome, PublicoAlvo, DataLancamento, Descricao, ""};
     }
 }
