@@ -209,7 +209,7 @@ public class ReservaPanel extends javax.swing.JPanel implements PropertyChangeLi
         txtQtdBilhetes.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
 
         btnCriarReserva.setText("Criar reserva");
-        btnCriarReserva.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnCriarReserva.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnCriarReserva.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCriarReservaActionPerformed(evt);
@@ -229,7 +229,7 @@ public class ReservaPanel extends javax.swing.JPanel implements PropertyChangeLi
 
         btnUpdateReserva.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         btnUpdateReserva.setText("Atualizar");
-        btnUpdateReserva.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnUpdateReserva.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnUpdateReserva.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnUpdateReservaActionPerformed(evt);
@@ -238,7 +238,7 @@ public class ReservaPanel extends javax.swing.JPanel implements PropertyChangeLi
 
         btnReset.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         btnReset.setText("Restaurar");
-        btnReset.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnReset.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnReset.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnResetActionPerformed(evt);
@@ -300,6 +300,8 @@ public class ReservaPanel extends javax.swing.JPanel implements PropertyChangeLi
         );
 
         tabPanel.addTab("Criar / Editar reserva", jPanel1);
+
+        jPanel3.setBackground(new java.awt.Color(45, 45, 45));
 
         txtTotalReservasStatus.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
         txtTotalReservasStatus.setForeground(new java.awt.Color(255, 255, 255));
